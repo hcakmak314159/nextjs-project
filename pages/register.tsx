@@ -7,10 +7,14 @@ import {HiAtSymbol,HiFingerPrint} from 'react-icons/hi';
 import {AiOutlinePhone} from 'react-icons/ai'
 import {RxAvatar} from 'react-icons/rx';
 import {useState} from 'react';
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 function register() {
   //The state that makes the password appear in the desired state
-  const [show,setShow] =  useState(false);
+  const [show,setShow] =  useState({password:false,cpassword:false});
+  //State holding value for phone number format
+  const [value, setValue] = useState()
 
   return (
     <Layout>
@@ -19,11 +23,11 @@ function register() {
         </Head>
         <section className='w-3/4 mx-auto flex flex-col gap-10'>
           <div className='title'>
-            <h1 className='text-gray-800 text-4xl font-bold py-4'>Register</h1>
-            <p className='w-3/4 mx-auto text-gray-400'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <h1 className='text-gray-800 text-4xl font-bold py-4 text-left'>Hello!</h1>
+            <p className=' mx-auto text-gray-400 text-left'>Sign Up to Get Started</p>
           </div>
           {/*form*/}
-          <form className='flex flex-col gap-5'>
+          <form className='flex flex-col gap-5 '>
           <div className={styles.input_group}>
               <input type='text'
               name='Name'
@@ -39,14 +43,12 @@ function register() {
               
             </div>
             <div className={styles.input_group}>
-              <input type='phone'
-              name='Phone'
-              placeholder='Phone Number'
-              className={styles.input_text}
-              />
-              <span className='icon flex items-center px-4'>
-                <AiOutlinePhone size={25}/>
-              </span>
+              <PhoneInput
+                className={styles.PhoneInputInput}
+                placeholder='Enter phone number'
+                value={value}
+                onChange={()=>setValue(value)}/>
+           
             </div>
             <div className={styles.input_group}>
               <input type='email'
@@ -61,13 +63,26 @@ function register() {
             <div className={styles.input_group}>
               <input 
      
-              type={`${show?"text":"password"}`}
+              type={`${show.password?"text":"password"}`}
               name='password'
               placeholder='Password'
               className={styles.input_text}
               
               />
-              <span className='icon flex items-center px-4' onClick={()=> setShow(!show)}>
+              <span className='icon flex items-center px-4' onClick={()=> setShow({...show,password:!show.password})}>
+                <HiFingerPrint size={25}/>
+              </span>
+            </div>
+            <div className={styles.input_group}>
+              <input 
+     
+              type={`${show.cpassword?"text":"password"}`}
+              name='cpassword'
+              placeholder='Confirm Password'
+              className={styles.input_text}
+              
+              />
+              <span className='icon flex items-center px-4' onClick={()=> setShow({...show,cpassword:!show.cpassword})}>
                 <HiFingerPrint size={25}/>
               </span>
             </div>
@@ -75,12 +90,7 @@ function register() {
               <div>
                 <input  type='checkbox'></input><span className='px-1'>Keep me signed in</span>
               </div>
-              <div>
-                <Link href={'/forgot'}>
-                  <span className='text-blue-700 font-semibold '>Forgot password?</span>
-                </Link>
-            
-            </div>
+              
               
             </div>
 
@@ -88,7 +98,7 @@ function register() {
             {/*Login buttons*/}
             <div className={styles.button}>
               <button type='submit'>
-                Login
+                Sign Up
               </button>
             </div>
             
@@ -96,7 +106,7 @@ function register() {
 
           {/* bottom */}
           <p className='text-center text-gray-400'>
-            Don't have a account yet? <Link href={'/register'}><span className='text-blue-700 font-semibold '>Sign Up</span></Link>
+            Already a user?  <Link href={'/login'}><span className='text-blue-700 font-semibold '>Login</span></Link>
           </p>
 
         </section>

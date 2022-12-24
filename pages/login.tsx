@@ -4,7 +4,10 @@ import Layout from '../layout/layout'
 import Link from 'next/link'
 import styles from '../styles/Form.module.css'
 import {HiAtSymbol,HiFingerPrint} from 'react-icons/hi';
+import {FcGoogle} from 'react-icons/fc';
 import {useState} from 'react';
+import {AiFillGithub} from 'react-icons/ai'
+import {BsFacebook} from 'react-icons/bs'
 
 
 function login() {
@@ -18,8 +21,8 @@ function login() {
         </Head>
         <section className='w-3/4 mx-auto flex flex-col gap-10'>
           <div className='title'>
-            <h1 className='text-gray-800 text-4xl font-bold py-4'>Explore</h1>
-            <p className='w-3/4 mx-auto text-gray-400'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <h1 className='text-gray-800 text-4xl font-bold py-4'>Hello Again!</h1>
+            <p className='w-3/4 mx-auto text-gray-400'>Welcome to the PitonShop application where you can view the most popular books on IT</p>
           </div>
           {/*form*/}
           <form className='flex flex-col gap-5'>
@@ -66,6 +69,20 @@ function login() {
                 Login
               </button>
             </div>
+
+            {/* Google Auth */}
+            {/* Facebook Auth */}
+            {/* Github Auth */}
+            <div className='flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5'>
+              <span className='text-center font-light mx-4 mb-0 text-gray-400'>Or</span>
+            </div>
+            <div className='flex justify-center gap-4'>
+              <button><FcGoogle size={30}/></button>
+              <button><AiFillGithub size={30}/></button>
+              <button><BsFacebook color={'#3b5998'} size={25}/></button>
+            </div>
+
+            
             
           </form>
 

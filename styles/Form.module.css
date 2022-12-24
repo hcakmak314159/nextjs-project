@@ -9,7 +9,7 @@
 }
 
 .button{
-    @apply w-full bg-gradient-to-r from-blue-500 to-indigo-500;
+    @apply w-full border rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500;
     @apply py-3 text-gray-50 text-lg;
 }
 
@@ -25,3 +25,17 @@
         color:818CF8;
         cursor:pointer;
     }
+
+.PhoneInputInput {
+	@apply w-full py-4 px-6 border rounded-xl bg-slate-50;
+    @apply flex border rounded-xl;
+    position: relative;
+    border-color: transparent; 
+    
+}
+.PhoneInputCountryIcon{
+    width: 100px;
+}
+
+
+
