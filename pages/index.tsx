@@ -4,18 +4,20 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSession,getSession,signOut } from "next-auth/react"
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const[session,setSession] = useState(false);
+  
+  const { data: session } = useSession()
 
+  
   return (
     <div className={styles.container}>
       <Head>
         <title>Home Page</title>
       </Head>
-      {session ? User():Guest()}
+      {session ? User({session}):Guest()}
       
     </div>
   )
@@ -36,12 +38,17 @@ function Guest(){
 
 // Create a component for Tokenize (Authorize) User
 
-function User(){
+function User({session}){
   return(
     <main className='container mx-auto text-center py-20'>
         <h3 className='text-4xl font-bold'>Homepage</h3>
+        <div className='details'>
+          <h5>{session.user.name}</h5>
+          <h5>{session.user.email}</h5>
+        </div>
+
         <div className='flex justify-center'>
-          <button className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-500'>Sign Out</button>
+          <button onClick={() => signOut()} className='mt-5 px-10 py-1 rounded-sm bg-indigo-500 bg-gray-500' >Sign Out</button>
 
         </div>
 
@@ -50,4 +57,22 @@ function User(){
         </div>
       </main>
   )
+}
+
+export async function getServerSideProps({req}) {
+  const session = await getSession({req})
+  if(!session){
+    return{
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+
+
+  return{
+    props:{session}
+  }
+  
 }
