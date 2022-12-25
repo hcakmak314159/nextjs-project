@@ -10,9 +10,14 @@ import {AiFillGithub} from 'react-icons/ai'
 import {BsFacebook} from 'react-icons/bs'
 import { signIn } from "next-auth/react"
 import { useFormik } from 'formik';
-import login_validate from '../lib/validate'
+import { useRouter } from 'next/navigation';
+import axios from 'axios'
+import { useSession,getSession,signOut } from "next-auth/react"
 
 function login() {
+
+  const router = useRouter()
+  const [navigate,setNavigate] = useState(false);
 
   
   const formik = useFormik({
@@ -20,17 +25,30 @@ function login() {
        email: '',
        password:''
      },
-     validate:login_validate,
+     
      onSubmit:onSubmit
    
   });
 
   
-  
   async function onSubmit(values) {
-    console.log(values)
-    
-  } 
+    const status = await signIn('credentials',{
+      redirect:false,
+      email:values.email,
+      password:values.password,
+      callbackUrl:'/'
+    })
+    if(status.ok){
+      router.push(status.url)
+    }
+    if(status?.error){
+      console.log(error);
+    }
+  }
+ 
+   
+  
+
 
   //The state that makes the password appear in the desired state
   const [show,setShow] =  useState(false);

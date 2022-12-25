@@ -11,14 +11,17 @@ import {useFormik} from 'formik';
 import { registerValidate } from '../lib/validate'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-
+import { useRouter } from 'next/navigation';
+import axios from 'axios'
 
 function register() {
   //The state that makes the password appear in the desired state
   const [show,setShow] =  useState({password:false,cpassword:false});
   //State holding value for phone number format
   const [value, setValue] = useState()
-  console.log(value)
+  const router = useRouter()
+  const [navigate,setNavigate] = useState(false);
+  
   const formik = useFormik({
     initialValues: {
       name:'',
@@ -35,8 +38,19 @@ function register() {
  
  async function onSubmit(values) {
    console.log(values)
+
+    await axios.post('https://assignment-api.piton.com.tr/api/v1/user/register',{
+    name:values.name,email:values.email,password:values.password
+   })
+   setNavigate(true);
+  }
+   if (navigate){
+      router.push('/login')
+   }
+
    
- }
+   
+ 
 
   return (
     <Layout>
@@ -49,8 +63,8 @@ function register() {
             <p className=' mx-auto text-gray-400 text-left'>Sign Up to Get Started</p>
           </div>
           {/*form*/}
-          <form className='flex flex-col gap-5 ' onSubmit={formik.handleSubmit}>
-          <div className={styles.input_group}>
+          <form className='flex flex-col gap-5   ' onSubmit={formik.handleSubmit}>
+          <div className='flex border rounded-xl '>
               <input type='text'
               name='name'
               placeholder='Name'
